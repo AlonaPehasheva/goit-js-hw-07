@@ -1,0 +1,18 @@
+ul,
+ol {
+  list-style: none;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+}
+
+body {
+  background-color: white;
+}
+.gallery {
+  display: flex;
+  flex-direction: row;
+  gap: 40 px;
+  flex-wrap: wrap;
+  width: 100%;
+}
