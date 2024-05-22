@@ -1,43 +1,37 @@
-document.body.style.backgroundColor = '#abbbc4';
+const divFirstElem = document.querySelector('#controls');
+const divBoxElem = document.querySelector('#boxes');
+const inputElem = document.querySelector('input');
+const btnCreateElem = divFirstElem.querySelector('[data-create]');
+console.log(btnCreateElem);
+const btnDestroyElem = divFirstElem.querySelector('[data-destroy]');
+console.log(btnDestroyElem);
+btnDestroyElem.classList.add('destroy');
+inputElem.classList.add('input-amount');
+
+btnCreateElem.addEventListener('click', () => {
+  const amount = Number(inputElem.value);
+  if (amount > 1 && amount < 100) {
+    createBoxes(amount);
+    inputElem.value = '';
+  }
+});
+function createBoxes(amount) {
+  divBoxElem.innerHTML = '';
+  for (let i = 0; i < amount; i++) {
+    const BoxElem = document.createElement('div');
+    BoxElem.style.width = `${30 + i * 10}px`;
+    BoxElem.style.height = `${30 + i * 10}px`;
+    BoxElem.style.backgroundColor = getRandomHexColor();
+    divBoxElem.appendChild(BoxElem);
+  }
+}
+function destroyBoxes() {
+  divBoxElem.innerHTML = '';
+}
+btnDestroyElem.addEventListener('click', destroyBoxes);
 
 function getRandomHexColor() {
-  return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-}
-
-const controls = document.querySelector('controls');
-const inputNumberEl = document.querySelector('[type="number"]');
-const createBtnEl = document.querySelector('button[data-create]');
-const destroyBtnEl = document.querySelector('button[data-destroy]');
-const divBoxesEl = document.getElementById('boxes');
-divBoxesEl.style.display = 'flex';
-divBoxesEl.style.flexWrap = 'wrap';
-divBoxesEl.style.alignItems = 'center';
-divBoxesEl.style.marginTop = '30px';
-createBtnEl.addEventListener('click', () => {
-  if (
-    Number(inputNumberEl.value.trim()) > Number(inputNumberEl.max) ||
-    Number(inputNumberEl.value.trim()) < Number(inputNumberEl.min)
-  ) {
-    alert('Please enter number from 1 to 100');
-  } else {
-    createBoxes(inputNumberEl.value.trim());
-  }
-  inputNumberEl.value = '';
-});
-
-destroyBtnEl.addEventListener('click', destroyBoxes);
-
-function destroyBoxes() {
-  inputNumberEl.value = '';
-  divBoxesEl.innerHTML = '';
-}
-function createBoxes(amount) {
-  let size = 30;
-  const boxesArr = [];
-  for (let i = 0; i < amount; i += 1) {
-    size += 10 * i;
-    const div = `<div class="item" style="display: block; margin-right: 30px; margin-bottom: 30px; background-color: ${getRandomHexColor()}; width: ${size}px; height: ${size}px;"></div>`;
-    boxesArr.push(div);
-  }
-  divBoxesEl.insertAdjacentHTML('beforeend', boxesArr.join(''));
+  return `#${Math.floor(Math.random() * 16777215)
+    .toString(16)
+    .padStart(6, 0)}`;
 }
